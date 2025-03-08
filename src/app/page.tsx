@@ -26,9 +26,13 @@ export default function ImageCarousel(): JSX.Element {
   // Setup and clear autoplay interval
   useEffect(() => {
     if (isPlaying) {
-      intervalRef.current = setInterval(() => {
-        setCurr((prev) => (prev + 1) % slides.length);
-      }, 3000);
+      if (curr < slides.length - 1) {
+        intervalRef.current = setInterval(() => {
+          setCurr((prev) => (prev < slides.length - 1 ? prev + 1 : prev));
+        }, 3000);
+      } else {
+        setIsPlaying(false); // Stop autoplay when reaching the last slide
+      }
     }
 
     return () => {
@@ -96,7 +100,7 @@ export default function ImageCarousel(): JSX.Element {
                   visibility:
                     getSlideOpacity(index) === 0 ? "hidden" : "visible",
                   transition:
-                    "opacity 0.5s ease, transform 2s ease, visibility 1s ease",
+                    "opacity 0.5s ease, transform 1s ease, visibility 1s ease",
                   transform: `scale(${index === curr ? 1 : 0.9})`,
                 }}
               >
