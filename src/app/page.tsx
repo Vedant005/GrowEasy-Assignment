@@ -3,7 +3,6 @@ import { useEffect, useState, useRef, JSX } from "react";
 import Image from "next/image";
 import { gsap } from "gsap";
 
-// Define types
 type IntervalRef = ReturnType<typeof setInterval> | null;
 
 const slides: string[] = [
@@ -20,8 +19,28 @@ export default function ImageCarousel(): JSX.Element {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const intervalRef = useRef<IntervalRef>(null);
 
-  const containerWidth: number = 750;
-  const slideWidth: number = 400;
+  const [containerWidth, setContainerWidth] = useState<number>(750);
+  const [slideWidth, setSlideWidth] = useState<number>(400);
+
+  useEffect(() => {
+    const updateSizes = () => {
+      if (window.innerWidth < 640) {
+        setContainerWidth(500);
+        setSlideWidth(250);
+      } else if (window.innerWidth < 1024) {
+        setContainerWidth(600);
+        setSlideWidth(350);
+      } else {
+        setContainerWidth(750);
+        setSlideWidth(400);
+      }
+    };
+
+    updateSizes();
+    window.addEventListener("resize", updateSizes);
+
+    return () => window.removeEventListener("resize", updateSizes);
+  }, []);
 
   useEffect(() => {
     if (isPlaying) {
@@ -47,6 +66,12 @@ export default function ImageCarousel(): JSX.Element {
       const position: number =
         -(curr * slideWidth) + (containerWidth / 2 - slideWidth / 2);
 
+      if (containerRef.current == containerRef?.current?.children[0]) {
+        gsap.to(containerRef.current, {
+          x: 0,
+          duration: 0.7,
+        });
+      }
       gsap.to(containerRef.current, {
         x: position,
         duration: 0.7,
