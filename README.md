@@ -14,6 +14,8 @@ This project demonstrates the use of Next.js and Gsap animation to create a caro
 
 ## Demo
 
+https://github.com/user-attachments/assets/848a62a5-2434-44e7-8abc-3d5079129a02
+
 ## Installation and Setup
 
 1. Clone the repository
