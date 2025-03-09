@@ -7,11 +7,11 @@ import { gsap } from "gsap";
 type IntervalRef = ReturnType<typeof setInterval> | null;
 
 const slides: string[] = [
-  "/image1.jpg",
-  "/image2.jpg",
-  "/image3.jpg",
-  "/image4.jpg",
-  "/image3.jpg",
+  "/sale.png",
+  "/stairs.jpg",
+  "/kitchen.jpg",
+  "/living.jpg",
+  "/description.png",
 ];
 
 export default function ImageCarousel(): JSX.Element {
@@ -23,15 +23,14 @@ export default function ImageCarousel(): JSX.Element {
   const containerWidth: number = 750;
   const slideWidth: number = 400;
 
-  // Setup and clear autoplay interval
   useEffect(() => {
     if (isPlaying) {
       if (curr < slides.length - 1) {
         intervalRef.current = setInterval(() => {
           setCurr((prev) => (prev < slides.length - 1 ? prev + 1 : prev));
-        }, 3000);
+        }, 2000);
       } else {
-        setIsPlaying(false); // Stop autoplay when reaching the last slide
+        setIsPlaying(false);
       }
     }
 
@@ -110,15 +109,16 @@ export default function ImageCarousel(): JSX.Element {
                     alt={`Slide ${index + 1}`}
                     width={slideWidth - 30}
                     height={300}
-                    className="rounded-lg shadow-md"
+                    className="rounded-lg "
                   />
                 </div>
               </div>
             ))}
           </div>
         </div>
-
-        <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex space-x-3">
+      </div>
+      <div className=" relative">
+        <div className="  absolute bottom-0 left-1/2 transform -translate-x-1/2 flex space-x-4">
           {slides.slice(1, 4).map((_, index) => {
             const slideIndex: number = index + 1;
             return (
